@@ -1,5 +1,7 @@
 import { db } from "~/server/db";
 
+export const dynamic = "force-dynamic";
+
 const mockUrls = [
   "https://utfs.io/f/79fb97cb-0ce0-4e4f-824c-7e44c2a8d718-srkle0.png",
   "https://utfs.io/f/66873c7c-3e9b-464b-bc14-54c15d3f0534-jshcw8.png",
@@ -7,7 +9,6 @@ const mockUrls = [
   "https://utfs.io/f/80c21cc8-b0a9-4fd3-9f10-8ece4290c178-yx1040.png",
   "https://utfs.io/f/e8a80e84-ffcc-4327-9a26-cb007016ce70-aqnrr3.avif"
 ]
-
 
 const mockImages = mockUrls.map((url, index) => ({
   id: index + 1,
