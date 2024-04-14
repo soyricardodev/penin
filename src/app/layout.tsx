@@ -13,6 +13,21 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
+function TopNav() {
+  return (
+    <nav className="flex items-center justify-between w-full p-4 font-semibold border-b text-xl">
+      <div>
+        Gallery
+      </div>
+
+      <div>
+        Sign in
+      </div>
+    </nav>
+  );
+} 
+
+
 export default function RootLayout({
   children,
 }: {
@@ -20,7 +35,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>{children}</body>
+      <body className={`font-sans ${inter.variable} bg-black text-white flex flex-col gap-4`}>
+        <TopNav />
+        {children}
+      </body>
     </html>
   );
 }
