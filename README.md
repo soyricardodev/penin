@@ -6,8 +6,9 @@
 - [x] Scaffold basic ui with mock data
 - [x] Tidy up build process
 - [x] Attach database to UI (postgres)
-- [ ] Add auth (w / clerk)
+- [x] Add auth (w / clerk)
 - [ ] Add image upload
+- [ ] "taint" (server-only)
 - [ ] Error management (w/ Sentry)
 - [ ] Routing/image page (parallel route)
 - [ ] Deletebutton (w/ Server Actions)
