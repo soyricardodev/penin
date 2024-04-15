@@ -16,3 +16,9 @@
 - [ ] Delete button (w/ Server Actions)
 - [ ] Analytics (posthog)
 - [ ] Ratelimiting (upstash)
+
+## PENIN - Escribe tu pensamiento
+
+- [ ] Make the form of 5 questions
+- [ ] Scaffold basic ui with mock data
+- [ ] Setup the schemas for db

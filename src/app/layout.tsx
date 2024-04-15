@@ -22,7 +22,6 @@ export const metadata = {
 
 export default function RootLayout({
   children,
-  modal,
 }: {
   children: React.ReactNode;
   modal: React.ReactNode;
@@ -38,8 +37,6 @@ export default function RootLayout({
             <TopNav />
             <main className="overflow-y-scroll">{children}</main>
           </div>
-          {modal}
-          <div className="modal-root"></div>
         </body>
       </html>
     </ClerkProvider>
