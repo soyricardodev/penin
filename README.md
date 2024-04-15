@@ -5,9 +5,10 @@
 - [x] Make it deploy (vercel)
 - [x] Scaffold basic ui with mock data
 - [x] Tidy up build process
+- [x] Actually set up a database
 - [x] Attach database to UI (postgres)
 - [x] Add auth (w / clerk)
-- [ ] Add image upload
+- [x] Add image upload
 - [ ] "taint" (server-only)
 - [ ] Use Next/Image Component
 - [ ] Error management (w/ Sentry)
