@@ -34,9 +34,12 @@ export default function RootLayout({
         <body
           className={`font-sans ${inter.variable} flex flex-col gap-4 bg-black text-white`}
         >
-          <TopNav />
-          {children}
+          <div className="grid h-screen grid-rows-[auto,1fr]">
+            <TopNav />
+            <main className="overflow-y-scroll">{children}</main>
+          </div>
           {modal}
+          <div className="modal-root"></div>
         </body>
       </html>
     </ClerkProvider>
