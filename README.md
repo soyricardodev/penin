@@ -19,24 +19,14 @@
 
 ## PENIN - Escribe tu pensamiento
 
-- [ ] Make the form of 5 questions
+- [x] Make the form of 5 questions
 - [ ] Scaffold basic ui with mock data
 - [ ] Setup the schemas for db
 
-### Cuestiona tu pensamiento
+## UI TODO:
 
-0. Describe tu pensamiento
-1. Es cierto este pensamiento?
-2. Que tan cierto es?
-3. Que me hace sentir?
-4. De donde proviene?
-5. Hay otra forma de pensar sobre esto?
-
-Final Step:
-"Enfrentar los pensamientos
-intrusivos es un paso valiente,
-recuerda que al hacerlo ganaras
-control sobre ellos, te resultara
-mas facil mantener la calma
-y cambiarlos por pensamientos
-compasivos y realistas"
+- [x] Make sidebar
+- [x] Make the home page with form carousel
+- [ ] Improve home page ui
+- [ ] Parallel routes for sidebar button
+- [ ] Add more todos
