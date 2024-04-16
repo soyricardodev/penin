@@ -13,8 +13,8 @@
 - [x] Use Next/Image Component
 - [x] Error management (w/ Sentry)
 - [x] Routing/image page (parallel route)
-- [ ] Delete button (w/ Server Actions)
-- [ ] Analytics (posthog)
+- [x] Analytics (posthog)
+- [x] Delete button (w/ Server Actions)
 - [ ] Ratelimiting (upstash)
 
 ## PENIN - Escribe tu pensamiento
