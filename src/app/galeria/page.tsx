@@ -11,26 +11,26 @@ async function Images() {
   return (
     <div className="flex flex-wrap justify-center gap-4 p-4">
       {images.map((image) => (
-        <div className="flex size-48 flex-col" key={image.id}>
+        <div key={image.id} className="flex h-48 w-48 flex-col">
           <Link href={`/img/${image.id}`}>
             <Image
               src={image.url}
-              alt={image.name}
+              style={{ objectFit: "contain" }}
               width={192}
               height={192}
-              style={{ objectFit: "contain" }}
+              alt={image.name}
             />
-            <div>{image.name}</div>
           </Link>
+          <div>{image.name}</div>
         </div>
       ))}
     </div>
   );
 }
 
-export default async function HomePage() {
+export default async function GalleryPage() {
   return (
-    <main>
+    <main className="">
       <SignedOut>
         <div className="h-full w-full text-center text-2xl">
           Please sign in above
