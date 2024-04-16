@@ -15,7 +15,7 @@
 - [x] Routing/image page (parallel route)
 - [x] Analytics (posthog)
 - [x] Delete button (w/ Server Actions)
-- [ ] Ratelimiting (upstash)
+- [-] Ratelimiting (upstash but im on free tier)
 
 ## PENIN - Escribe tu pensamiento
 
