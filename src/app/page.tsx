@@ -31,7 +31,7 @@ export default function HomePage() {
   }, [api]);
 
   return (
-    <div className="">
+    <div className="css-175 flex-shrink grow md:w-[920px] lg:w-[990px] xl:w-[1050px]">
       <div>
         <h2 className="text-left text-3xl font-semibold">Hola, Natalia.</h2>
       </div>
