@@ -7,6 +7,7 @@ import { TopNav } from "./_components/topnav";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
+import { CSPostHogProvider } from "./_analytics/provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,19 +29,21 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="es">
-        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-        <body
-          className={`font-sans ${inter.variable} flex flex-col gap-4 bg-neutral-100 text-neutral-900`}
-        >
-          <div className="grid h-screen grid-rows-[auto,1fr]">
-            <TopNav />
-            <main className="mx-auto mt-9 w-full max-w-screen-xl overflow-y-scroll">
-              {children}
-            </main>
-          </div>
-        </body>
-      </html>
+      <CSPostHogProvider>
+        <html lang="es">
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+          <body
+            className={`font-sans ${inter.variable} flex flex-col gap-4 bg-neutral-100 text-neutral-900`}
+          >
+            <div className="grid h-screen grid-rows-[auto,1fr]">
+              <TopNav />
+              <main className="mx-auto mt-9 w-full max-w-screen-xl overflow-y-scroll">
+                {children}
+              </main>
+            </div>
+          </body>
+        </html>
+      </CSPostHogProvider>
     </ClerkProvider>
   );
 }
