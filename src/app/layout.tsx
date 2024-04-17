@@ -1,20 +1,13 @@
 import "~/styles/globals.css";
-import "@uploadthing/react/styles.css";
 
 import { ClerkProvider } from "@clerk/nextjs";
-import { Inter } from "next/font/google";
-import { TopNav } from "./_components/topnav";
+import { GeistSans } from "geist/font/sans";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { CSPostHogProvider } from "./_analytics/provider";
 import { SideNav } from "./_components/side-nav";
 import { TailwindIndicator } from "~/components/tailwind-indicator";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
 
 export const metadata = {
   title: "PENIN - Pensamientos Intrusivos",
@@ -35,7 +28,7 @@ export default function RootLayout({
         <html lang="es">
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           <body
-            className={`font-sans ${inter.variable}bg-white`}
+            className={`font-sans ${GeistSans.variable}bg-white`}
             style={{ scrollbarColor: "rgb(185, 202, 211) rgb(247, 249, 249)" }}
           >
             <div className="css-175 pointer-events-none [flex:1_1_0%]">
