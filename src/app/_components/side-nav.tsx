@@ -25,7 +25,8 @@ function SideUserActions() {
               elements: {
                 userButtonBox:
                   "p-2 hover:bg-gray-200 w-full rounded-full transition-colors focus:outline-none",
-                userButtonOuterIdentifier: "text-base font-semibold",
+                userButtonOuterIdentifier:
+                  "text-base font-semibold hidden lg:block",
                 userButtonAvatarBox: "h-10 w-10",
                 userButtonAvatarImage:
                   "h-full w-full object-contain rounded-full",
