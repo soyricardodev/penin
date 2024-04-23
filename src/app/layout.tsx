@@ -8,6 +8,7 @@ import { ourFileRouter } from "./api/uploadthing/core";
 import { CSPostHogProvider } from "./_analytics/provider";
 import { SideNav } from "./_components/side-nav";
 import { TailwindIndicator } from "~/components/tailwind-indicator";
+import { cn } from "~/lib/utils";
 
 export const metadata = {
   title: "PENIN - Pensamientos Intrusivos",
@@ -28,7 +29,7 @@ export default function RootLayout({
         <html lang="es">
           <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           <body
-            className={`font-sans ${GeistSans.variable}bg-white`}
+            className={cn("font-sans bg-background", GeistSans.variable)}
             style={{ scrollbarColor: "rgb(185, 202, 211) rgb(247, 249, 249)" }}
           >
             <div className="css-175 pointer-events-none [flex:1_1_0%]">
