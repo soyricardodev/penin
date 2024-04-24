@@ -3,12 +3,7 @@ import { withUt } from "uploadthing/tw";
 
 const config = withUt({
   darkMode: ["class"],
-  content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
-  ],
+  content: ["./src/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
     container: {
@@ -74,7 +69,8 @@ const config = withUt({
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)"],
+        geist: ["var(--font-geist-sans)"],
+        sans: ["var(--font-mali)"],
       },
     },
   },
