@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent } from "~/components/ui/card";
 import {
@@ -9,12 +10,55 @@ import {
 	CarouselContent,
 	CarouselItem,
 	CarouselNext,
-	CarouselPrevious,
+	useCarousel,
 } from "~/components/ui/carousel";
 import { Label } from "~/components/ui/label";
 import { Textarea } from "~/components/ui/textarea";
+import { cn } from "~/lib/utils";
+import { ArrowLeft } from "lucide-react";
+
+const ButtonPrevious = React.forwardRef<
+	HTMLButtonElement,
+	React.ComponentProps<typeof Button>
+>(({ className, ...props }, ref) => {
+	const { scrollPrev, canScrollPrev } = useCarousel();
+
+	return (
+		<Button
+			ref={ref}
+			className={cn(className, !canScrollPrev && "hidden")}
+			disabled={!canScrollPrev}
+			onClick={scrollPrev}
+			{...props}
+		>
+			Anterior
+			<span className="sr-only">Pregunta Anterior</span>
+		</Button>
+	);
+});
+
+const ButtonNext = React.forwardRef<
+	HTMLButtonElement,
+	React.ComponentProps<typeof Button>
+>(({ className, ...props }, ref) => {
+	const { scrollNext, canScrollNext } = useCarousel();
+
+	return (
+		<Button
+			ref={ref}
+			className={cn(className, !canScrollNext && "hidden")}
+			disabled={!canScrollNext}
+			onClick={scrollNext}
+			{...props}
+		>
+			Siguiente
+			<span className="sr-only">Pregunta Siguiente</span>
+		</Button>
+	);
+});
 
 export default function HomePage() {
+	const { user } = useUser();
 	const [api, setApi] = useState<CarouselApi>();
 	const [current, setCurrent] = useState(0);
 	const [count, setCount] = useState(0);
@@ -31,101 +75,94 @@ export default function HomePage() {
 	}, [api]);
 
 	return (
-		<div className="css-175 w-full flex-shrink grow sm:w-[600px] md:w-[920px] lg:w-[990px] xl:w-[1050px]">
-			<div className="css-175 grow [backface-visibility:hidden]">
-				<div className="css-175 min-h-full w-full grow flex-row items-stretch justify-between bg-white">
-					{/* Main Form Content */}
-					<div className="css-175 z-10 mx-0 w-full max-w-[600px] grow border border-x-[1px] border-[rgb(239,243,244)] bg-white"></div>
+		<div className="css-175 w-full flex-shrink grow sm:w-[600px] md:w-[920px] lg:w-[990px] xl:w-[1050px] mx-auto flex-col">
+			<TopHeader name={user?.firstName} picUrl={user?.imageUrl} />
 
-					{/* Sidebar Main */}
-					<div className="css-175 mr-[70px] w-[350px]">
-						<div className="css-175 h-full min-h-[1640px]">
-							<div className="css-175 mt-0"></div>
-
-							<div className="css-175 fixed top-0 w-[350px]">
-								<div className="css-175 block">
-									<div className="css-175" aria-label="Sidebar Anuncios">
-										<div className="css-175 pb-16 pt-3">
-											{/* Premium Aside */}
-											<div className="css-175">
-												<div className="css-175 mb-4 overflow-hidden rounded-[16px] border border-solid border-[rgb(247,249,249)]">
-													<aside className="css-175 flex-col items-start gap-[10px] px-4">
-														<div className="min-w-0 text-2xl font-extrabold leading-6 text-[rgb(15,20,25)] [overflow-wrap:break-word]">
-															<span>Suscríbete a Premium</span>
-														</div>
-													</aside>
-												</div>
-											</div>
-										</div>
-									</div>
+			<div className="css-175 grow px-4 w-full">
+				<form onSubmit={(e) => e.preventDefault()}>
+					<Carousel setApi={setApi} className="w-full my-4">
+						<CarouselContent>
+							<CarouselItem>
+								<Textarea placeholder="¡¿Qué está pasando?!" />
+								<div className="mt-4 flex items-center justify-end">
+									<ButtonNext />
 								</div>
-							</div>
-						</div>
-					</div>
+							</CarouselItem>
+							<CarouselItem>
+								<Textarea placeholder="¿Es cierto este pensamiento?" />
+								<div className="mt-4 flex items-center justify-between">
+									<ButtonPrevious />
+									<ButtonNext />
+								</div>
+							</CarouselItem>
+							<CarouselItem>
+								<Textarea placeholder="¿Que tan cierto es?" />
+								<div className="mt-4 flex items-center justify-between">
+									<ButtonPrevious />
+									<ButtonNext />
+								</div>
+							</CarouselItem>
+							<CarouselItem>
+								<Textarea placeholder="¿Que me hace sentir?" />
+								<div className="mt-4 flex items-center justify-between">
+									<ButtonPrevious />
+									<ButtonNext />
+								</div>
+							</CarouselItem>
+							<CarouselItem>
+								<Textarea placeholder="¿De donde proviene?" />
+								<div className="mt-4 flex items-center justify-between">
+									<ButtonPrevious />
+									<ButtonNext />
+								</div>
+							</CarouselItem>
+							<CarouselItem>
+								<Textarea placeholder="¿Hay otra forma de pensar sobre esto?" />
+								<div className="mt-4 flex items-center justify-between">
+									<ButtonPrevious />
+									<Button type="submit" className="border-2 border-secondary">
+										Guardar
+									</Button>
+								</div>
+							</CarouselItem>
+						</CarouselContent>
+					</Carousel>
+				</form>
+			</div>
+		</div>
+	);
+}
+
+function TopHeader({
+	name,
+	picUrl,
+}: { name: string | null | undefined; picUrl: string | undefined }) {
+	return (
+		<div className="flex flex-col items-center w-full px-4">
+			<div className="flex justify-between w-full items-center mt-2">
+				<div className="text-2xl font-black font-display">PENIN</div>
+				<Button
+					variant="destructive"
+					className="uppercase rounded-full text-sm border-2 border-primary text-primary bg-secondary px-4"
+					size="sm"
+				>
+					sos
+				</Button>
+			</div>
+
+			<div className="w-full flex gap-3 items-center my-8">
+				<img
+					src={picUrl}
+					alt={`${name}'s profile avatar`}
+					className="size-14 rounded-full border-[2.5px] border-black"
+				/>
+				<div>
+					<h3 className="font-semibold text-xl font-display">Hola {name}! </h3>
+					<p className="font-light text-base font-display leading-4">
+						Vamos a explorar lo que esta pasando por tu mente.
+					</p>
 				</div>
 			</div>
-			<div>
-				<h2 className="text-left text-3xl font-semibold">Hola, Natalia.</h2>
-			</div>
-			<form>
-				<Carousel setApi={setApi} className="w-full max-w-xs">
-					<CarouselContent>
-						<CarouselItem>
-							<div>
-								<Label htmlFor="">Describe tu pensamiento</Label>
-
-								<Textarea placeholder="" />
-							</div>
-						</CarouselItem>
-						<CarouselItem>
-							<div>
-								<Label htmlFor="">¿Es cierto este pensamiento?</Label>
-
-								<Textarea placeholder="" />
-							</div>
-						</CarouselItem>
-						<CarouselItem>
-							<div>
-								<Label htmlFor="">¿Es cierto este pensamiento?</Label>
-
-								<Textarea placeholder="" />
-							</div>
-						</CarouselItem>
-						<CarouselItem>
-							<div>
-								<Label htmlFor="">¿Que tan cierto es?</Label>
-
-								<Textarea placeholder="" />
-							</div>
-						</CarouselItem>
-						<CarouselItem>
-							<div>
-								<Label htmlFor="">¿Que me hace sentir?</Label>
-
-								<Textarea placeholder="" />
-							</div>
-						</CarouselItem>
-						<CarouselItem>
-							<div>
-								<Label htmlFor="">¿De donde proviene?</Label>
-
-								<Textarea placeholder="" />
-							</div>
-						</CarouselItem>
-						<CarouselItem>
-							<div>
-								<Label htmlFor="">¿Hay otra forma de pensar sobre esto?</Label>
-
-								<Textarea placeholder="" />
-							</div>
-						</CarouselItem>
-					</CarouselContent>
-					<CarouselPrevious />
-					<CarouselNext />
-				</Carousel>
-
-				<Button type="submit">Crear</Button>
-			</form>
 		</div>
 	);
 }
