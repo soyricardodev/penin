@@ -405,7 +405,7 @@ export function Questionnaire({ thought, onComplete }: QuestionnaireProps) {
 				initial={{ opacity: 0, y: -20 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.5 }}
-				className="space-y-2"
+				className={`space-y-2 ${animationClass}`}
 			>
 				<div className="text-sm text-muted-foreground">Tu pensamiento:</div>
 				<div className="p-4 bg-accent/80 backdrop-blur-sm rounded-lg text-sm italic card-glow">
@@ -435,7 +435,7 @@ export function Questionnaire({ thought, onComplete }: QuestionnaireProps) {
 					</div>
 
 					<div
-						className="relative w-full bg-muted rounded-full h-3 overflow-hidden"
+						className={`relative w-full bg-muted rounded-full h-3 overflow-hidden ${animationClass}`}
 						role="progressbar"
 						aria-valuenow={progressPercentage}
 						aria-valuemin={0}
@@ -463,7 +463,7 @@ export function Questionnaire({ thought, onComplete }: QuestionnaireProps) {
 						animate="center"
 						exit="exit"
 						transition={{ duration: 0.3, type: "tween" }}
-						className="space-y-4"
+						className={`space-y-4 ${animationClass}`}
 					>
 						<div className="flex items-center gap-3">
 							<div
