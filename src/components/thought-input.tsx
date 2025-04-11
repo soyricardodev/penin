@@ -79,9 +79,9 @@ export function ThoughtInput({ onSubmit }: ThoughtInputProps) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-2xl font-semibold gradient-text"
+          className="text-2xl font-semibold text-foreground"
         >
-          Bienvenido a PENIN
+          Bienvenid@ a PENIN
         </motion.h2>
 
         <motion.p
