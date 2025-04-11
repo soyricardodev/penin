@@ -19,8 +19,8 @@ export default function App() {
             <ThemeSwitcher />
           </div>
 
-          <Tabs defaultValue="new" value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid grid-cols-2 mb-4">
+          <Tabs defaultValue="new" value={activeTab} onValueChange={setActiveTab}>
+            <TabsList className="grid grid-cols-2 mb-4 w-full">
               <TabsTrigger value="new" className="flex items-center gap-2">
                 <Brain className="h-4 w-4" />
                 <span>Nuevo</span>
