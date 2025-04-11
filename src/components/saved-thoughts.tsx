@@ -31,17 +31,18 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { getAllThoughts, deleteThought, type SavedThought } from "@/lib/db";
+import { deleteThought, type SavedThought, getThoughtsQuery } from "@/lib/db";
 import { ThoughtDetail } from "./thought-detail";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import { useLiveQuery } from "dexie-react-hooks";
 
 interface SavedThoughtsProps {
 	onNewThought: () => void;
 }
 
 export function SavedThoughts({ onNewThought }: SavedThoughtsProps) {
-	const [thoughts, setThoughts] = useState<SavedThought[]>([]);
+	const thoughts = useLiveQuery(getThoughtsQuery);
 	const [filteredThoughts, setFilteredThoughts] = useState<SavedThought[]>([]);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [selectedThought, setSelectedThought] = useState<SavedThought | null>(
@@ -50,46 +51,28 @@ export function SavedThoughts({ onNewThought }: SavedThoughtsProps) {
 	const [thoughtToDelete, setThoughtToDelete] = useState<number | null>(null);
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
-	// Load thoughts immediately on component mount
-	useEffect(() => {
-		loadThoughts();
-	}, []);
-
 	useEffect(() => {
 		if (searchQuery.trim() === "") {
-			setFilteredThoughts(thoughts);
+			setFilteredThoughts(thoughts ?? []);
 		} else {
 			const query = searchQuery.toLowerCase();
 			setFilteredThoughts(
-				thoughts.filter(
+				thoughts?.filter(
 					(thought) =>
 						thought.thought.toLowerCase().includes(query) ||
 						thought.feeling.toLowerCase().includes(query) ||
 						thought.origin.toLowerCase().includes(query) ||
 						thought.alternative.toLowerCase().includes(query),
-				),
+				) ?? [],
 			);
 		}
 	}, [searchQuery, thoughts]);
-
-	const loadThoughts = async () => {
-		try {
-			const allThoughts = await getAllThoughts();
-			setThoughts(allThoughts);
-			setFilteredThoughts(allThoughts);
-		} catch (error) {
-			toast.error("Error al cargar pensamientos", {
-				description: "No se pudieron cargar tus pensamientos guardados.",
-			});
-		}
-	};
 
 	const handleDeleteThought = async () => {
 		if (!thoughtToDelete) return;
 
 		try {
 			await deleteThought(thoughtToDelete);
-			setThoughts(thoughts.filter((thought) => thought.id !== thoughtToDelete));
 			toast.success("Pensamiento eliminado", {
 				description: "El pensamiento ha sido eliminado correctamente.",
 			});
@@ -104,7 +87,7 @@ export function SavedThoughts({ onNewThought }: SavedThoughtsProps) {
 	};
 
 	const formatDate = (date: Date) => {
-		return new Intl.DateTimeFormat("es-ES", {
+		return new Intl.DateTimeFormat("es-VE", {
 			day: "2-digit",
 			month: "2-digit",
 			year: "numeric",
@@ -112,7 +95,7 @@ export function SavedThoughts({ onNewThought }: SavedThoughtsProps) {
 	};
 
 	const formatTime = (date: Date) => {
-		return new Intl.DateTimeFormat("es-ES", {
+		return new Intl.DateTimeFormat("es-VE", {
 			hour: "2-digit",
 			minute: "2-digit",
 		}).format(date);
@@ -126,12 +109,11 @@ export function SavedThoughts({ onNewThought }: SavedThoughtsProps) {
 				<h2 className="text-2xl font-semibold gradient-text">Historial</h2>
 				<Button
 					onClick={onNewThought}
-					variant="outline"
 					size="sm"
 					className="rounded-lg group"
 					aria-label="Crear nuevo pensamiento"
 				>
-					<PlusCircle className="h-4 w-4 mr-2" />
+					<PlusCircle className="size-4" />
 					Nuevo
 				</Button>
 			</div>
@@ -155,7 +137,7 @@ export function SavedThoughts({ onNewThought }: SavedThoughtsProps) {
 					className="flex flex-col items-center justify-center py-12 text-center"
 					aria-live="polite"
 				>
-					{thoughts.length === 0 ? (
+					{thoughts?.length === 0 ? (
 						<>
 							<FileText
 								className="h-12 w-12 text-muted-foreground mb-4"
@@ -276,7 +258,7 @@ export function SavedThoughts({ onNewThought }: SavedThoughtsProps) {
 											</AlertDialogTrigger>
 											<AlertDialogContent>
 												<AlertDialogHeader>
-													<AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
+													<AlertDialogTitle>¿Estás segur@?</AlertDialogTitle>
 													<AlertDialogDescription>
 														Esta acción no se puede deshacer. Esto eliminará
 														permanentemente este pensamiento de tu historial.
@@ -284,10 +266,7 @@ export function SavedThoughts({ onNewThought }: SavedThoughtsProps) {
 												</AlertDialogHeader>
 												<AlertDialogFooter>
 													<AlertDialogCancel>Cancelar</AlertDialogCancel>
-													<AlertDialogAction
-														onClick={handleDeleteThought}
-														className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-													>
+													<AlertDialogAction onClick={handleDeleteThought}>
 														Eliminar
 													</AlertDialogAction>
 												</AlertDialogFooter>
