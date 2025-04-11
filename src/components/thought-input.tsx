@@ -67,10 +67,10 @@ export function ThoughtInput({ onSubmit }: ThoughtInputProps) {
 	};
 
 	return (
-		<div className="space-y-8 relative">
+		<div className="space-y-2 relative">
 			<div className="blob-bg blob-animation" />
 
-			<div className="space-y-4 text-center">
+			<div className="space-y-1 text-center">
 				<motion.div
 					initial={{ scale: 0.8, opacity: 0 }}
 					animate={{ scale: 1, opacity: 1 }}
@@ -143,6 +143,7 @@ export function ThoughtInput({ onSubmit }: ThoughtInputProps) {
 						className="min-h-[150px] resize-none rounded-xl border-muted focus:border-primary focus:ring-primary transition-all duration-300 relative z-10"
 						placeholder="Escribe aquí tu pensamiento..."
 						aria-label="Escribe tu pensamiento intrusivo"
+						autoFocus
 					/>
 				</div>
 
