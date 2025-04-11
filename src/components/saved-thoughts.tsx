@@ -7,7 +7,6 @@ import {
 	Calendar,
 	Clock,
 	Search,
-	Loader2,
 	FileText,
 	AlertCircle,
 	ArrowRight,
@@ -44,7 +43,6 @@ interface SavedThoughtsProps {
 export function SavedThoughts({ onNewThought }: SavedThoughtsProps) {
 	const [thoughts, setThoughts] = useState<SavedThought[]>([]);
 	const [filteredThoughts, setFilteredThoughts] = useState<SavedThought[]>([]);
-	const [isLoading, setIsLoading] = useState(true);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [selectedThought, setSelectedThought] = useState<SavedThought | null>(
 		null,
@@ -52,6 +50,7 @@ export function SavedThoughts({ onNewThought }: SavedThoughtsProps) {
 	const [thoughtToDelete, setThoughtToDelete] = useState<number | null>(null);
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
+	// Load thoughts immediately on component mount
 	useEffect(() => {
 		loadThoughts();
 	}, []);
@@ -74,7 +73,6 @@ export function SavedThoughts({ onNewThought }: SavedThoughtsProps) {
 	}, [searchQuery, thoughts]);
 
 	const loadThoughts = async () => {
-		setIsLoading(true);
 		try {
 			const allThoughts = await getAllThoughts();
 			setThoughts(allThoughts);
@@ -83,8 +81,6 @@ export function SavedThoughts({ onNewThought }: SavedThoughtsProps) {
 			toast.error("Error al cargar pensamientos", {
 				description: "No se pudieron cargar tus pensamientos guardados.",
 			});
-		} finally {
-			setIsLoading(false);
 		}
 	};
 
@@ -151,18 +147,7 @@ export function SavedThoughts({ onNewThought }: SavedThoughtsProps) {
 				/>
 			</div>
 
-			{isLoading ? (
-				<div
-					className="flex flex-col items-center justify-center py-12"
-					aria-live="polite"
-				>
-					<Loader2
-						className="h-8 w-8 text-primary animate-spin mb-4"
-						aria-hidden="true"
-					/>
-					<p className="text-muted-foreground">Cargando pensamientos...</p>
-				</div>
-			) : filteredThoughts.length === 0 ? (
+			{filteredThoughts.length === 0 ? (
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
