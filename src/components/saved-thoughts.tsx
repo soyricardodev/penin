@@ -102,7 +102,7 @@ export function SavedThoughts({ onNewThought }: SavedThoughtsProps) {
 	};
 
 	return (
-		<div className="space-y-4 relative">
+		<div className="space-y-2 relative">
 			<div className="blob-bg blob-animation" />
 
 			<div className="flex justify-between items-center">
@@ -178,7 +178,7 @@ export function SavedThoughts({ onNewThought }: SavedThoughtsProps) {
 					)}
 				</motion.div>
 			) : (
-				<Card className="rounded-lg overflow-hidden card-glow">
+				<Card className="rounded-lg overflow-hidden card-glow py-0 cursor-pointer">
 					<ScrollArea className="h-[400px]">
 						<CardContent className="p-0">
 							{filteredThoughts.map((thought, index) => (
